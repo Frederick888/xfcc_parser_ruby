@@ -1,0 +1,62 @@
+name: Ruby
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    name: Ruby ${{ matrix.ruby }} on ${{ matrix.os }}
+    strategy:
+      matrix:
+        ruby:
+          - "2.7.7"
+          - "3.0.5"
+        os:
+          - ubuntu-latest
+          - macos-latest
+        artifact: [false]
+        include:
+          - os: ubuntu-latest
+            ruby: "3.1.3"
+            artifact: true
+          - os: macos-latest
+            ruby: "3.1.3"
+            artifact: false
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          rubygems: 'latest'
+          bundler-cache: true
+      - name: Set up Rust
+        id: rust_toolchain
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
+      - name: Cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: test-${{ runner.os }}-rustc-${{ steps.rust_toolchain.outputs.cachekey }}-ruby-${{ matrix.ruby }}-git-${{ github.sha }}
+          restore-keys: |
+            test-${{ runner.os }}-rustc-${{ steps.rust_toolchain.outputs.cachekey }}-ruby-${{ matrix.ruby }}-
+      - name: Run the default task
+        run: bundle exec rake
+      - name: Artifacts
+        if: ${{ matrix.artifact }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: Gem
+          retention-days: 60
+          path: |
+            pkg/
