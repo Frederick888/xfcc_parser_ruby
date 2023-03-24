@@ -14,6 +14,12 @@ Rake::ExtensionTask.new("xfcc_parser_ruby", GEMSPEC) do |ext|
   ext.ext_dir = "."
 end
 
+desc "Compile with debug symbols"
+task "compile:debug" do
+  ENV["RB_SYS_CARGO_PROFILE"] = "dev"
+  Rake::Task["compile"].invoke
+end
+
 Rake::TestTask.new(:test) do |t|
   t.libs << "test"
   t.libs << "lib"
