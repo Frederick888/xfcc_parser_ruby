@@ -3,6 +3,8 @@
 require_relative "lib/xfcc_parser_ruby/version"
 
 Gem::Specification.new do |spec|
+  binary_gem = !ENV["XFCC_PARSER_RUBY_BINARY_GEM"].nil?
+
   spec.name = "xfcc_parser_ruby"
   spec.version = XfccParserRuby::VERSION
   spec.authors = ["Frederick Zhang"]
@@ -13,6 +15,7 @@ Gem::Specification.new do |spec|
   spec.homepage = "https://github.com/Frederick888/xfcc_parser_ruby/"
   spec.required_ruby_version = [">= 2.6.0", "< 3.2.0"]
   spec.required_rubygems_version = ">= 3.3.11"
+  spec.platform = Gem::Platform.local if binary_gem
 
   # spec.metadata['allowed_push_host'] = "TODO: Set to your gem server 'https://example.com'"
 
@@ -27,10 +30,11 @@ Gem::Specification.new do |spec|
       (f == __FILE__) || f.match(%r{\A(?:(?:bin|test|spec|features)/|\.(?:git|circleci)|appveyor)})
     end
   end
+  spec.files += Dir["lib/*/xfcc_parser_ruby.#{RbConfig::CONFIG["DLEXT"]}"] if binary_gem
   spec.bindir = "exe"
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
-  spec.extensions = ["Cargo.toml"]
+  spec.extensions = ["Cargo.toml"] unless binary_gem
 
   # Uncomment to register a new dependency of your gem
   spec.add_dependency "rutie", "~> 0.0.3"

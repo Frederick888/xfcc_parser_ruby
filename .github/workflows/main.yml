@@ -56,7 +56,94 @@ jobs:
         if: ${{ matrix.artifact }}
         uses: actions/upload-artifact@v3
         with:
-          name: Gem
+          name: generic-gem
+          retention-days: 60
+          path: |
+            pkg/
+
+  binary_gems:
+    runs-on: ${{ matrix.os }}
+    name: Pre-Built Gem for ${{ matrix.os }}
+    continue-on-error: true
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+    env:
+      XFCC_PARSER_RUBY_BINARY_GEM: true
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Rust
+        id: rust_toolchain
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
+      - name: Cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+            vendor/bundle
+          key: build-${{ runner.os }}-rustc-${{ steps.rust_toolchain.outputs.cachekey }}-ruby-${{ matrix.ruby }}-git-${{ github.sha }}
+          restore-keys: |
+            build-${{ runner.os }}-rustc-${{ steps.rust_toolchain.outputs.cachekey }}-ruby-${{ matrix.ruby }}-
+
+      - name: Set up Ruby 2.6
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "2.6"
+          rubygems: 'latest'
+          bundler-cache: false
+      - name: Build Gem
+        run: |
+          bundle install
+          bundle exec rake build
+
+      - name: Set up Ruby 2.7
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "2.7"
+          rubygems: 'latest'
+          bundler-cache: false
+      - name: Build Gem
+        run: |
+          bundle install
+          bundle exec rake build
+
+      - name: Set up Ruby 3.0
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.0"
+          rubygems: 'latest'
+          bundler-cache: false
+      - name: Build Gem
+        run: |
+          bundle install
+          bundle exec rake build
+
+      - name: Set up Ruby 3.1
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.1"
+          rubygems: 'latest'
+          bundler-cache: false
+      - name: Build Gem
+        run: |
+          bundle install
+          bundle exec rake build
+
+      - name: List built binaries
+        shell: bash
+        run: |
+          ls -lah lib/[0-9]*/*
+
+      - name: Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: pre-built-${{ matrix.os }}-gem
           retention-days: 60
           path: |
             pkg/
