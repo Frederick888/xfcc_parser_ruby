@@ -10,3 +10,6 @@ xfcc-parser = "0.1.1"
 [lib]
 name = "xfcc_parser_ruby"
 crate-type = ["cdylib"]
+
+[profile.release]
+strip = "debuginfo"

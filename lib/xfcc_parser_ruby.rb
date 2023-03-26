@@ -16,8 +16,20 @@ module XfccParserRuby
     end
   end
 
+  RUBY_MINOR_VERSION = RUBY_VERSION.split(".")[0..1].join(".")
+  lib_path = "../lib/#{RUBY_MINOR_VERSION}"
+  Gem.path.each do |p|
+    if p.include? "/vendor/bundle/"
+      lib_path = "../lib/#{RUBY_MINOR_VERSION}"
+      break
+    end
+    if File.exist? "#{p}/gems/xfcc_parser_ruby-#{VERSION}/lib/xfcc_parser_ruby.so"
+      lib_path = "../lib"
+      break
+    end
+  end
   Rutie.new(:xfcc_parser_ruby,
             lib_prefix: "",
-            lib_path: "../lib",
+            lib_path: lib_path,
             lib_suffix: RbConfig::CONFIG["DLEXT"]).init "Init_xfcc_parser_ruby", __dir__
 end

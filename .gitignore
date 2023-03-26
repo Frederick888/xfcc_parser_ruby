@@ -3,10 +3,10 @@
 /_yardoc/
 /coverage/
 /doc/
-/lib/*.bundle
-/lib/*.dll
-/lib/*.dylib
-/lib/*.so
+/lib/**/*.bundle
+/lib/**/*.dll
+/lib/**/*.dylib
+/lib/**/*.so
 /pkg/
 /spec/reports/
 /tmp/
