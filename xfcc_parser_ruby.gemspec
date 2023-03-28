@@ -9,6 +9,7 @@ Gem::Specification.new do |spec|
   spec.version = XfccParserRuby::VERSION
   spec.authors = ["Frederick Zhang"]
   spec.email = ["frederick888@tsundere.moe"]
+  spec.license = "BSD-3-Clause"
 
   spec.summary = "Envoy x-forwarded-client-cert (XFCC) parser"
   spec.description = "Envoy x-forwarded-client-cert (XFCC) parser written in Rust for Ruby"
