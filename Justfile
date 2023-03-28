@@ -26,10 +26,10 @@ release version:
     sed 's/^version = ".*"$/version = "{{version}}"/' -i ./Cargo.toml
     git add ./Cargo.toml
     # ruby
-    sed 's/^VERSION = ".*"$/VERSION = "{{version}}"/' -i ./lib/xfcc_parser_ruby/version.rb
+    sed 's/VERSION = ".*"$/VERSION = "{{version}}"/' -i ./lib/xfcc_parser_ruby/version.rb
     # update lock files and test
     just
-    git add ./Cargo.lock ./Gemfile.lock
+    git add ./Cargo.lock ./Gemfile.lock ./lib/xfcc_parser_ruby/version.rb
     # commit and tag
     git status
     git diff --exit-code
