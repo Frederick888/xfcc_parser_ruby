@@ -34,13 +34,17 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-          rubygems: 'latest'
+          rubygems: "latest"
           bundler-cache: true
       - name: Set up Rust
         id: rust_toolchain
         uses: dtolnay/rust-toolchain@master
         with:
           toolchain: stable
+      - name: Install macOS Dependencies
+        if: contains(matrix.os, 'macos')
+        run: |
+          brew install coreutils
       - name: Cache
         uses: actions/cache@v3
         with:
@@ -54,6 +58,10 @@ jobs:
             test-${{ runner.os }}-rustc-${{ steps.rust_toolchain.outputs.cachekey }}-ruby-${{ matrix.ruby }}-
       - name: Run the default task
         run: bundle exec rake
+      - name: Print SHA256SUMs
+        shell: bash
+        run: |
+          sha256sum pkg/*
       - name: Artifacts
         if: ${{ matrix.artifact }}
         uses: actions/upload-artifact@v3
@@ -81,6 +89,10 @@ jobs:
         uses: dtolnay/rust-toolchain@master
         with:
           toolchain: stable
+      - name: Install macOS Dependencies
+        if: contains(matrix.os, 'macos')
+        run: |
+          brew install coreutils
       - name: Cache
         uses: actions/cache@v3
         with:
@@ -98,7 +110,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "2.6"
-          rubygems: 'latest'
+          rubygems: "latest"
           bundler-cache: false
       - name: Build Gem
         run: |
@@ -109,7 +121,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "2.7"
-          rubygems: 'latest'
+          rubygems: "latest"
           bundler-cache: false
       - name: Build Gem
         run: |
@@ -120,7 +132,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.0"
-          rubygems: 'latest'
+          rubygems: "latest"
           bundler-cache: false
       - name: Build Gem
         run: |
@@ -131,7 +143,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.1"
-          rubygems: 'latest'
+          rubygems: "latest"
           bundler-cache: false
       - name: Build Gem
         run: |
@@ -142,6 +154,10 @@ jobs:
         shell: bash
         run: |
           ls -lah lib/[0-9]*/*
+      - name: Print SHA256SUMs
+        shell: bash
+        run: |
+          sha256sum lib/[0-9]*/* pkg/*
 
       - name: Artifacts
         uses: actions/upload-artifact@v3
