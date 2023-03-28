@@ -16,7 +16,7 @@ If bundler is not being used to manage dependencies, install the gem by executin
 
 Note that some distributions have different names for `libruby`, and if you've installed the gems with bundled binaries, you'll see errors like `libruby.so.3.0: cannot open shared object file: No such file or directory` when you load the library.
 
-In this case, you can either link the `libruby` shared library to `libruby.[so|dylib|dll].[<version>]`, so simply install the source gem instead.
+In this case, you can either link the `libruby` shared library to `libruby.[so|dylib|dll].[<version>]`, or simply install the source gem instead.
 
 ## Usage
 
