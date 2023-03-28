@@ -45,9 +45,10 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            ~/.cargo/registry
-            ~/.cargo/git
             target
+            tmp/*/xfcc_parser_ruby/*/target
+            ~/.cargo/git
+            ~/.cargo/registry
           key: test-${{ runner.os }}-rustc-${{ steps.rust_toolchain.outputs.cachekey }}-ruby-${{ matrix.ruby }}-git-${{ github.sha }}
           restore-keys: |
             test-${{ runner.os }}-rustc-${{ steps.rust_toolchain.outputs.cachekey }}-ruby-${{ matrix.ruby }}-
@@ -84,10 +85,11 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            ~/.cargo/registry
-            ~/.cargo/git
             target
+            tmp/*/xfcc_parser_ruby/*/target
             vendor/bundle
+            ~/.cargo/git
+            ~/.cargo/registry
           key: build-${{ runner.os }}-rustc-${{ steps.rust_toolchain.outputs.cachekey }}-ruby-${{ matrix.ruby }}-git-${{ github.sha }}
           restore-keys: |
             build-${{ runner.os }}-rustc-${{ steps.rust_toolchain.outputs.cachekey }}-ruby-${{ matrix.ruby }}-
