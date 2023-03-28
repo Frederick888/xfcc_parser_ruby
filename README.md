@@ -4,15 +4,15 @@ Wrapper of Envoy [`x-forwarded-client-cert`][1] (XFCC) header parser [`xfcc-pars
 
 ## Installation
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
+First download the [Rust][3] toolchain >= 1.56.0 if you would like to install the source gem.
 
-Install the gem and add to the application's Gemfile by executing:
+Then install the gem and add to the application's Gemfile by executing:
 
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+    $ bundle add xfcc_parser_ruby
 
 If bundler is not being used to manage dependencies, install the gem by executing:
 
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+    $ gem install xfcc_parser_ruby
 
 Note that some distributions have different names for `libruby`, and if you've installed the gems with bundled binaries, you'll see errors like `libruby.so.3.0: cannot open shared object file: No such file or directory` when you load the library.
 
