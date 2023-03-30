@@ -1,6 +1,6 @@
 [package]
 name = "xfcc_parser_ruby"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Frederick Zhang <frederick888@tsundere.moe>"]
 edition = "2021"
 description = "Envoy x-forwarded-client-cert (XFCC) parser written in Rust for Ruby"
