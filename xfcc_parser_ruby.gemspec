@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
   spec.homepage = "https://github.com/Frederick888/xfcc_parser_ruby/"
   spec.required_ruby_version = [">= 2.6.0", "< 3.2.0"]
   spec.required_rubygems_version = ">= 3.3.11"
-  spec.platform = Gem::Platform.local if binary_gem
+  spec.platform = Gem::Platform.local.tap { |p| p.version = nil } if binary_gem
 
   # spec.metadata['allowed_push_host'] = "TODO: Set to your gem server 'https://example.com'"
 
